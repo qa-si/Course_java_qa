@@ -1,6 +1,7 @@
 .gradle
 build/
 temp/
+libraries/
 
 # Ignore Gradle GUI config
 gradle-app.setting
