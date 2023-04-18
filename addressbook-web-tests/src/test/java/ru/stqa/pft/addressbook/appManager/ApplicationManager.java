@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.appManager;
 
-import org.checkerframework.checker.units.qual.C;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -45,5 +44,9 @@ public class ApplicationManager {
 
 	public ContactHelper getContactHelper() {
 		return contactHelper;
+	}
+
+	public void acceptAlert() {
+		wd.switchTo().alert().accept();
 	}
 }
