@@ -1,11 +1,17 @@
 package ru.stqa.pft.addressbook.appManager;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.*;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.Browser;
 import ru.stqa.pft.addressbook.model.LoginData;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+
+import static org.openqa.selenium.remote.Browser.*;
 
 public class ApplicationManager {
 	private NavigationHelper navigationHelper;
@@ -14,9 +20,20 @@ public class ApplicationManager {
 	private ContactHelper contactHelper;
 	LoginData user = new LoginData("admin", "secret");
 	WebDriver wd;
+	private String browser;
+
+	public ApplicationManager(String browser) {
+		this.browser = browser;
+	}
 
 	public void init() {
-		wd = new FirefoxDriver();
+		if (browser == FIREFOX.browserName()) {
+			wd = new FirefoxDriver();
+		} else if (browser == CHROME.browserName()) {
+			wd = new ChromeDriver();
+		} else if (browser == EDGE.browserName()){
+			wd = new EdgeDriver();
+		}
 		wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		wd.get("http://localhost/addressbook/");
 		groupHelper = new GroupHelper(wd);
