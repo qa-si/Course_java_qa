@@ -1,11 +1,10 @@
 package ru.stqa.pft.addressbook.appManager;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.Browser;
 import ru.stqa.pft.addressbook.model.LoginData;
 
 import java.util.Objects;
@@ -20,18 +19,18 @@ public class ApplicationManager {
 	private ContactHelper contactHelper;
 	LoginData user = new LoginData("admin", "secret");
 	WebDriver wd;
-	private String browser;
+	private final String browser;
 
 	public ApplicationManager(String browser) {
 		this.browser = browser;
 	}
 
 	public void init() {
-		if (browser == FIREFOX.browserName()) {
+		if (Objects.equals(browser, FIREFOX.browserName())) {
 			wd = new FirefoxDriver();
-		} else if (browser == CHROME.browserName()) {
+		} else if (Objects.equals(browser, CHROME.browserName())) {
 			wd = new ChromeDriver();
-		} else if (browser == EDGE.browserName()){
+		} else if (Objects.equals(browser, EDGE.browserName())){
 			wd = new EdgeDriver();
 		}
 		wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
