@@ -5,11 +5,12 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import ru.stqa.pft.addressbook.appManager.ApplicationManager;
 
+import static org.openqa.selenium.remote.Browser.CHROME;
 import static org.openqa.selenium.remote.Browser.EDGE;
 
 public class TestBase {
 
-	protected final ApplicationManager app = new ApplicationManager(EDGE.browserName());
+	protected final ApplicationManager app = new ApplicationManager(CHROME.browserName());
 
 	@BeforeMethod(alwaysRun = true)
 	public void setUp() throws Exception {

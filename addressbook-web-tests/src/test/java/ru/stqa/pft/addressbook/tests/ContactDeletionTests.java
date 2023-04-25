@@ -5,12 +5,12 @@ import ru.stqa.pft.addressbook.model.ContactData;
 
 public class ContactDeletionTests extends TestBase{
 
-	ContactData contact = new ContactData("Ivan", "Ivanov", "iv@an.ov");
+	ContactData contact = new ContactData("Ivan", "Ivanov", "iv@an.ov", "group1");
 
 	@Test
 	public void testContactDeletion(){
 		app.getContactHelper().initContactCreation();
-		app.getContactHelper().fillContactForm(contact);
+		app.getContactHelper().fillContactForm(contact, true);
 		app.getContactHelper().submitContactCreation();
 
 		app.getNavigationHelper().gotoContactPage();
