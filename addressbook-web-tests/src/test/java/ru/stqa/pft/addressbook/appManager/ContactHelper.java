@@ -47,4 +47,14 @@ public class ContactHelper extends HelperBase {
 	public void initContactModification(String email) {
 		click(By.xpath("//*[@accept='" + email + "']/../..//*[@title='Edit']"));
 	}
+
+	public void createContact(ContactData contact) {
+		initContactCreation();
+		fillContactForm(contact, true);
+		submitContactCreation();
+	}
+
+	public boolean isThereAContact(String email) {
+		return (isElementPresent(By.xpath("//*[@accept='" + email + "']")));
+	}
 }
