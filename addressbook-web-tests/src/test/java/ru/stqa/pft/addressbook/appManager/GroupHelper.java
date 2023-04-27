@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-public class GroupHelper extends HelperBase{
+public class GroupHelper extends HelperBase {
 
 	public GroupHelper(WebDriver wd) {
 		super(wd);
@@ -53,5 +53,17 @@ public class GroupHelper extends HelperBase{
 
 	public boolean isThereAGroup() {
 		return (isElementPresent(By.name("selected[]")));
+	}
+
+	public boolean isGroupExisting(String groupName) {
+		return (isElementPresent(By.xpath("//*[@class='group'][text()='" + groupName + "']")));
+	}
+
+	public void checkGroupExisting(GroupData group) {
+		if (isGroupExisting(group.getName())) {
+			return;
+		} else {
+			createGroup(group);
+		}
 	}
 }
