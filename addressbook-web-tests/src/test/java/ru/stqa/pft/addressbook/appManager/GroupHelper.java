@@ -66,4 +66,8 @@ public class GroupHelper extends HelperBase {
 			createGroup(group);
 		}
 	}
+
+	public int getGroupCount() {
+		return wd.findElements(By.name("selected[]")).size();
+	}
 }
