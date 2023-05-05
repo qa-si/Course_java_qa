@@ -7,6 +7,7 @@ public class ContactData {
 	private final String name;
 	private final String lastname;
 	private final String email;
+
 	private final String group;
 
 	public ContactData(int id, String name, String lastname, String email, String group) {
@@ -60,5 +61,14 @@ public class ContactData {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name, lastname);
+	}
+
+	@Override
+	public String toString() {
+		return "ContactData{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", lastname='" + lastname + '\'' +
+				'}';
 	}
 }
