@@ -30,7 +30,7 @@ public class ApplicationManager {
 			wd = new FirefoxDriver();
 		} else if (Objects.equals(browser, CHROME.browserName())) {
 			wd = new ChromeDriver();
-		} else if (Objects.equals(browser, EDGE.browserName())){
+		} else if (Objects.equals(browser, EDGE.browserName())) {
 			wd = new EdgeDriver();
 		}
 		wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
@@ -50,15 +50,15 @@ public class ApplicationManager {
 		wd.findElement(By.linkText("Logout")).click();
 	}
 
-	public GroupHelper getGroupHelper() {
-		return groupHelper;
-	}
-
-	public NavigationHelper getNavigationHelper() {
+	public NavigationHelper goTo() {
 		return navigationHelper;
 	}
 
-	public ContactHelper getContactHelper() {
+	public GroupHelper group() {
+		return groupHelper;
+	}
+
+	public ContactHelper contact() {
 		return contactHelper;
 	}
 
