@@ -5,17 +5,21 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
 public class ContactCreationTests extends TestBase {
 	GroupData group = new GroupData().withName("test1");
+	private File photo = new File("src/test/resources/OK.png");
 	ContactData contact = new ContactData()
 			.withName("Fill")
 			.withLastname("Jones")
 			.withEmail("email")
-			.withGroup(group.getName());
+			.withGroup(group.getName())
+			.withPhoto(photo);
 
 	@Test
 	public void testContactCreation() throws Exception {
