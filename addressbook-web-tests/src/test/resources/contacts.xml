@@ -4,17 +4,20 @@
     <lastname>Lastname 0</lastname>
     <address></address>
     <email>Email 0</email>
+    <group>test1</group>
   </group>
   <group>
     <name>Name 1</name>
     <lastname>Lastname 1</lastname>
     <address></address>
     <email>Email 1</email>
+    <group>test1</group>
   </group>
   <group>
     <name>Name 2</name>
     <lastname>Lastname 2</lastname>
     <address></address>
     <email>Email 2</email>
+    <group>test1</group>
   </group>
 </list>

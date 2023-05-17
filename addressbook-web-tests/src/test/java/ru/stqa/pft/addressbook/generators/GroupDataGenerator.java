@@ -17,13 +17,13 @@ import java.util.List;
 
 public class GroupDataGenerator {
 
-	@Parameter(names = "-c" , description = "Group count")
+	@Parameter(names = "-c", description = "Group count")
 	public int count;
 
-	@Parameter(names = "-f" , description = "Target file")
+	@Parameter(names = "-f", description = "Target file")
 	public String file;
 
-	@Parameter(names = "-d" , description = "Data format")
+	@Parameter(names = "-d", description = "Data format")
 	public String format;
 
 	public static void main(String[] args) throws IOException {
@@ -31,7 +31,7 @@ public class GroupDataGenerator {
 		JCommander jCommander = new JCommander(generator);
 		try {
 			jCommander.parse(args);
-		} catch (ParameterException ex){
+		} catch (ParameterException ex) {
 			jCommander.usage();
 			return;
 		}
@@ -42,14 +42,11 @@ public class GroupDataGenerator {
 		List<GroupData> groups = generateGroups(count);
 		if (format.equals("csv")) {
 			saveAsCsv(groups, new File(file));
-		}
-		else if (format.equals("xml")){
+		} else if (format.equals("xml")) {
 			saveAsXml(groups, new File(file));
-		}
-		else if (format.equals("json")){
+		} else if (format.equals("json")) {
 			saveAsJson(groups, new File(file));
-		}
-		else {
+		} else {
 			System.out.println("Unrecognized format " + format);
 		}
 	}
@@ -73,7 +70,7 @@ public class GroupDataGenerator {
 
 	private void saveAsCsv(List<GroupData> groups, File file) throws IOException {
 		Writer writer = new FileWriter(file);
-		for (GroupData group:groups){
+		for (GroupData group : groups) {
 			writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
 		}
 		writer.close();
@@ -81,7 +78,7 @@ public class GroupDataGenerator {
 
 	private List<GroupData> generateGroups(int count) {
 		List<GroupData> groups = new ArrayList<>();
-		for (int i=0;i<count;i++){
+		for (int i = 0; i < count; i++) {
 			groups.add(new GroupData()
 					.withName(String.format("test %s", i))
 					.withHeader(String.format("header %s", i))

@@ -79,11 +79,11 @@ public class GroupHelper extends HelperBase {
 		return (isElementPresent(By.xpath("//*[@class='group'][text()='" + groupName + "']")));
 	}
 
-	public void checkGroupExisting(GroupData group) {
-		if (isGroupExisting(group.getName())) {
+	public void checkGroupExisting(String group) {
+		if (isGroupExisting(group)) {
 			return;
 		} else {
-			create(group);
+			create(new GroupData().withName(group));
 		}
 	}
 

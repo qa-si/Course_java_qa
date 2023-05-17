@@ -16,7 +16,7 @@ public class ContactModificationTests extends TestBase {
 	@BeforeMethod
 	public void ensurePreconditions() {
 		app.goTo().groupPage();
-		app.group().checkGroupExisting(group);
+		app.group().checkGroupExisting(group.getName());
 		app.goTo().contactPage();
 		if (app.contact().all().size() == 0) {
 			app.contact().create(new ContactData()

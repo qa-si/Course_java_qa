@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +29,7 @@ public class ContactHelper extends HelperBase {
 		type(By.name("firstname"), contactData.getName());
 		type(By.name("lastname"), contactData.getLastname());
 		type(By.name("email"), contactData.getEmail());
-		attach(By.name("photo"), contactData.getPhoto());
+//		attach(By.name("photo"), contactData.getPhoto());
 
 		if (creation) {
 			new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -121,7 +123,7 @@ public class ContactHelper extends HelperBase {
 					.withAllEmails(allEmails)
 					.withAllPhones(allPhones));
 		}
-		return contactCash;
+		return new Contacts(contactCash);
 	}
 
 	public ContactData infoFromEditForm(ContactData contact) {
@@ -147,7 +149,6 @@ public class ContactHelper extends HelperBase {
 				.withAddress(address)
 				.withAllEmails(allEmails);
 	}
-
 
 	public int returnIdContact(ContactData contact) {
 		WebElement element = wd.findElement(By.xpath("//*[text()='" + contact.getEmail() + "']/../..//input"));
