@@ -40,7 +40,7 @@ public class ContactCreationTests extends TestBase {
 
 	@DataProvider
 	public Iterator<Object[]> validContactsFromJson() throws IOException {
-		try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/contacts.json"))){
+		try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/contacts.json"))) {
 			String line = reader.readLine();
 			String json = "";
 			while (line != null) {
@@ -55,7 +55,7 @@ public class ContactCreationTests extends TestBase {
 	}
 
 	@Test(dataProvider = "validContactsFromJson")
-	public void testContactCreation(ContactData contact) throws Exception {
+	public void testContactCreation(ContactData contact) {
 		app.goTo().groupPage();
 		app.group().checkGroupExisting(contact.getGroup());
 		app.goTo().contactPage();
