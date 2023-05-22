@@ -9,7 +9,7 @@ import static org.openqa.selenium.remote.Browser.CHROME;
 
 public class TestBase {
 
-	protected static final ApplicationManager app = new ApplicationManager(CHROME.browserName());
+	protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", CHROME.browserName()));
 
 	@BeforeSuite
 	public void setUp() throws Exception {
