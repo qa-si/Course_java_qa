@@ -1,51 +1,42 @@
-package ru.stqa.pft.addressbook.tests;
+package ru.stqa.pft.addressbook.appManager;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
 
-public class HbConnectionTest {
+public class DbHelper {
 
-	public static SessionFactory sessionFactory;
+	private final SessionFactory sessionFactory;
 
-	@BeforeClass
-	public static void setUp() throws Exception {
+	public DbHelper(){
 		// A SessionFactory is set up once for an application!
 		final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
 				.configure() // configures settings from hibernate.cfg.xml
 				.build();
-		try {
-			sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-		} catch (Exception e) {
-			e.printStackTrace();
-			// The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
-			// so destroy it manually.
-			StandardServiceRegistryBuilder.destroy(registry);
-		}
+		sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
 	}
 
-	@Test
-	public void testHbConnectionGroup() {
+	public Groups groups(){
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		List<GroupData> result = session.createQuery("from GroupData").list();
+		List<GroupData> result = session.createQuery("from GroupData where deprecated = '0000-00-00 00:00:00'").list();
 		for (GroupData group : result) {
 			System.out.println(group);
 		}
 		session.getTransaction().commit();
 		session.close();
+		return new Groups(result);
 	}
 
-	@Test
-	public void testHbConnection() {
+	public Contacts contacts(){
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		List<ContactData> result = session.createQuery("from ContactData where deprecated = '0000-00-00 00:00:00'").list();
@@ -54,5 +45,6 @@ public class HbConnectionTest {
 		}
 		session.getTransaction().commit();
 		session.close();
+		return new Contacts(result);
 	}
 }

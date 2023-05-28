@@ -1,18 +1,18 @@
 [
   {
-    "name": "Name 0",
+    "firstname": "Name 0",
     "lastname": "Lastname 0",
     "email": "Email 0",
     "group": "test1"
   },
   {
-    "name": "Name 1",
+    "firstname": "Name 1",
     "lastname": "Lastname 1",
     "email": "Email 1",
     "group": "test1"
   },
   {
-    "name": "Name 2",
+    "firstname": "Name 2",
     "lastname": "Lastname 2",
     "email": "Email 2",
     "group": "test1"

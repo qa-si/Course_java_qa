@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.Assert.assertEquals;
 
 public class ContactCreationTests extends TestBase {
 
@@ -59,14 +58,12 @@ public class ContactCreationTests extends TestBase {
 		app.goTo().groupPage();
 		app.group().checkGroupExisting(contact.getGroup());
 		app.goTo().contactPage();
-		Contacts before = app.contact().all();
+		Contacts before = app.db().contacts();
 		app.contact().initContactCreation();
 		app.contact().fillContactForm(contact, true);
 		app.contact().submitContactCreation();
 		app.goTo().contactPage();
-		Contacts after = app.contact().all();
-		assertEquals(after.size(), before.size() + 1);
-		assertThat(app.contact().count(), equalTo(before.size() + 1));
+		Contacts after = app.db().contacts();
 
 		contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
 		assertThat(after, equalTo(before.withAdded(contact)));
