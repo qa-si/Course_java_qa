@@ -39,9 +39,12 @@ public class ContactsAndGroupsTest extends TestBase{
 	public void testContactRemoveFromGroup() {
 		Groups groups = app.db().groups();
 		for (GroupData group: groups) {
+			app.contact().openContactListInGroup(group);
 			if (app.contact().all().size() > 0) {
 				ContactData contact = app.contact().all().iterator().next();
 				app.contact().removeContactFromGroup(contact, group);
+				app.goTo().contactPage();
+				app.contact().openContactListInGroup(group);
 				assertThat(false, equalTo(app.contact().checkContactIsVisible(contact)));
 				break;
 			}
