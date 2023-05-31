@@ -15,8 +15,7 @@ public class ContactDeletionTests extends TestBase {
 	ContactData contact = new ContactData()
 			.withFirstname("Ivan")
 			.withLastname("Ivanov")
-			.withEmail("iv@an.ov").
-			withGroup(group.getName());
+			.withEmail("iv@an.ov");
 
 	@BeforeMethod
 	public void ensurePreconditions() {
