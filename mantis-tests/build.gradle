@@ -10,6 +10,9 @@ dependencies {
     testImplementation group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.4'
     implementation group: 'commons-net', name: 'commons-net', version: '3.6'
+    testImplementation group: 'org.subethamail', name: 'subethasmtp-wiser', version: '1.2'
+    implementation group: 'ru.lanwen.verbalregex', name: 'java-verbal-expressions', version: '1.4'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.5'
 }
 
 test {
