@@ -22,10 +22,29 @@ public class MailHelper {
 
 	public List<MailMessage> waitForMail(int count, long timeout) throws MessagingException, IOException {
 		long start = System.currentTimeMillis();
+		for (int i = 0; i < wiser.getMessages().size(); i++) {
+		}
 		while (System.currentTimeMillis() < start + timeout) {
 			if (wiser.getMessages().size() >= count) {
 				return wiser.getMessages().stream().map((m) ->
 						toModelMail(m)).collect(Collectors.toList());
+			}
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		throw new Error("No mail :(");
+	}
+
+	public String waitForMailBySubject(String subject, long timeout) throws MessagingException, IOException {
+		long start = System.currentTimeMillis();
+		while (System.currentTimeMillis() < start + timeout) {
+			for (int i = 0; i < wiser.getMessages().size(); i++) {
+				if (wiser.getMessages().get(i).getMimeMessage().getSubject().equals(subject)) {
+					return wiser.getMessages().get(i).getMimeMessage().getContent().toString();
+				}
 			}
 			try {
 				Thread.sleep(1000);
@@ -43,17 +62,17 @@ public class MailHelper {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 			return null;
-		} catch (IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public void start(){
+	public void start() {
 		wiser.start();
 	}
 
-	public void stop(){
+	public void stop() {
 		wiser.stop();
 	}
 }
