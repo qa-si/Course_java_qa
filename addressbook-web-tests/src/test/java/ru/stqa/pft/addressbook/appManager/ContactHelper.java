@@ -187,12 +187,12 @@ public class ContactHelper extends HelperBase {
 	}
 
 	public boolean checkContactIsVisible(ContactData contact) {
-		return wd.findElement(By.cssSelector("input[value='" + contact.getId() + "']")).isDisplayed();
+		return wd.findElements(By.cssSelector("input[value='" + contact.getId() + "']")).size() > 0;
 	}
 
 	public Contacts setGroupsToContacts(Contacts contacts, Groups groups) {
 		for (GroupData group : groups) {
-			for (ContactData contact: contacts) {
+			for (ContactData contact : contacts) {
 				openContactListInGroup(group);
 				if (checkContactIsVisible(contact)) {
 					contact.inGroup(group);
@@ -205,6 +205,10 @@ public class ContactHelper extends HelperBase {
 	public void removeContactFromGroup(ContactData contact, GroupData group) {
 		openContactListInGroup(group);
 		selectContactById(contact.getId());
-		wd.findElement(By.name("group")).click();
+		wd.findElement(By.name("remove")).click();
+	}
+
+	public void returnToGroupClick(GroupData group) {
+		wd.findElement(By.xpath(String.format("group page \"%s\"", group.getName()))).click();
 	}
 }

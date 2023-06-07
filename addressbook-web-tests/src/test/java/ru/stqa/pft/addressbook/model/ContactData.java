@@ -42,7 +42,6 @@ public class ContactData {
 	@Transient
 	private String allEmails;
 	@Expose
-	@Transient
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "address_in_groups",
 			joinColumns = @JoinColumn(name = "id"),

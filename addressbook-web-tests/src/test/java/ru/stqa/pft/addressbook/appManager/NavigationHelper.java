@@ -3,6 +3,8 @@ package ru.stqa.pft.addressbook.appManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import static java.lang.System.getProperty;
+
 public class NavigationHelper extends HelperBase {
 	public NavigationHelper(WebDriver wd) {
 		super(wd);
@@ -23,6 +25,4 @@ public class NavigationHelper extends HelperBase {
 		}
 		click(By.xpath("//*[text()='home']"));
 	}
-
-
 }
