@@ -38,18 +38,18 @@ public class HttpSession {
 		return body.contains(String.format("<a href=\"/mantisbt-2.25.7/account_page.php\">%s</a>", username));
 	}
 
-	public boolean loginNewPassword(String username, String password, String oldUserName) throws IOException {
+	public boolean loginNewPassword(String newUserName, String password, String oldUserName) throws IOException {
 		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/login.php");
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("username", username));
+		params.add(new BasicNameValuePair("username", oldUserName));
 		params.add(new BasicNameValuePair("password", password));
 		params.add(new BasicNameValuePair("secure_session", "on"));
 		params.add(new BasicNameValuePair("return", "index.php"));
 		post.setEntity(new UrlEncodedFormEntity(params));
 		CloseableHttpResponse response = httpclient.execute(post);
 		String body = getTextFrom(response);
-		String newUsername = username + " ( " + oldUserName + " ) ";
-		return body.contains(String.format("<a href=\"/mantisbt-2.25.7/account_page.php\">%s</a>", newUsername));
+		String username = oldUserName + " ( " + newUserName + " ) ";
+		return body.contains(String.format("<a href=\"/mantisbt-2.25.7/account_page.php\">%s</a>", username));
 	}
 
 	private String getTextFrom(CloseableHttpResponse response) throws IOException {
