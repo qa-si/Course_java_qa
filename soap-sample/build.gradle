@@ -1,0 +1,51 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.testng:testng:7.3.0'
+}
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "no.nils:wsdl2java:0.12"
+    }
+}
+
+apply plugin: "no.nils.wsdl2java"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:+'
+}
+
+//wsdl2java {
+//    wsdlsToGenerate = [
+//            ['-p', 'com.acme.mypackage', '-autoNameResolution', "$projectDir/src/main/java"]
+//    ]
+//    wsdlDir = file("$projectDir/src/main/resources")
+//    locale = Locale.FRANCE
+//    cxfVersion = "2.5.1"
+//    cxfPluginVersion = "2.4.0"
+//}
+
+wsdl2java {
+    wsdlsToGenerate = [
+            ["$projectDir/src/main/resources/geoservice.wsdl"]
+    ]
+    generateWsdlDir = file("src/main/java")
+    wsdlDir = file("$projectDir/src/main/resources")
+    locale = Locale.FRANCE
+    cxfVersion = "2.5.1"
+    cxfPluginVersion = "2.4.0"
+}
