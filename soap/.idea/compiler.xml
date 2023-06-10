@@ -3,8 +3,6 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="17">
       <module name="soap-sample" target="1.8" />
-      <module name="soap-sample.main" target="1.8" />
-      <module name="soap-sample.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

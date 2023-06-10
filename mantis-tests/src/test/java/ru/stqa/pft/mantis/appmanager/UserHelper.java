@@ -1,4 +1,4 @@
-package ry.stqa.pft.mantis.appmanager;
+package ru.stqa.pft.mantis.appmanager;
 
 import org.openqa.selenium.By;
 import ru.lanwen.verbalregex.VerbalExpression;
@@ -52,7 +52,7 @@ public class UserHelper extends HelperBase {
 	}
 
 	public void resetPasswordClick() {
-		click(By.xpath("//input[@value='Сбросить пароль']"));
+		click(By.xpath("//input[@value='пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ']"));
 	}
 
 	public void confirmResetPassword(String confirmationLink, String userName, String password) {
@@ -66,9 +66,9 @@ public class UserHelper extends HelperBase {
 	public void loginByAdmin() {
 		if (wd.findElements(By.cssSelector(".user-info")).size() == 0 || !wd.findElement(By.cssSelector(".user-info")).getText().equals("administrator")) {
 			type(By.name("username"), "administrator");
-			click(By.cssSelector("input[value='Вход']"));
+			click(By.cssSelector("input[value='пїЅпїЅпїЅпїЅ']"));
 			type(By.name("password"), "root");
-			click(By.cssSelector("input[value='Вход']"));
+			click(By.cssSelector("input[value='пїЅпїЅпїЅпїЅ']"));
 		}
 	}
 

@@ -1,4 +1,4 @@
-package ry.stqa.pft.mantis.appmanager;
+package ru.stqa.pft.mantis.appmanager;
 
 import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;

@@ -1,4 +1,4 @@
-package ry.stqa.pft.mantis.appmanager;
+package ru.stqa.pft.mantis.appmanager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -22,6 +22,7 @@ public class ApplicationManager {
 	private UserHelper userHelper;
 	private FtpHelper ftp;
 	private MailHelper mailHelper;
+	private SoapHelper soapHelper;
 
 	public ApplicationManager(String browser) {
 		this.browser = browser;
@@ -88,5 +89,12 @@ public class ApplicationManager {
 			mailHelper = new MailHelper(this);
 		}
 		return mailHelper;
+	}
+
+	public SoapHelper soap() {
+		if (soapHelper == null) {
+			soapHelper = new SoapHelper(this);
+		}
+		return soapHelper;
 	}
 }
