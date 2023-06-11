@@ -6,6 +6,8 @@ public class Issue {
 	private String summary;
 	private String description;
 	private Project project;
+	private String comment;
+	private boolean fixed;
 
 	public int getId() {
 		return id;
@@ -21,6 +23,14 @@ public class Issue {
 
 	public Project getProject() {
 		return project;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public boolean isFixed() {
+		return fixed;
 	}
 
 	public Issue withId(int id) {
@@ -43,7 +53,13 @@ public class Issue {
 		return this;
 	}
 
+	public Issue withComment(String comment) {
+		this.comment = comment;
+		return this;
+	}
 
-
-
+	public Issue withFixed(boolean fixed) {
+		this.fixed = fixed;
+		return this;
+	}
 }
