@@ -52,7 +52,7 @@ public class UserHelper extends HelperBase {
 	}
 
 	public void resetPasswordClick() {
-		click(By.xpath("//input[@value='пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ']"));
+		click(By.xpath("//input[@value='Сбросить пароль']"));
 	}
 
 	public void confirmResetPassword(String confirmationLink, String userName, String password) {
@@ -66,9 +66,9 @@ public class UserHelper extends HelperBase {
 	public void loginByAdmin() {
 		if (wd.findElements(By.cssSelector(".user-info")).size() == 0 || !wd.findElement(By.cssSelector(".user-info")).getText().equals("administrator")) {
 			type(By.name("username"), "administrator");
-			click(By.cssSelector("input[value='пїЅпїЅпїЅпїЅ']"));
+			click(By.cssSelector("input[value='Вход']"));
 			type(By.name("password"), "root");
-			click(By.cssSelector("input[value='пїЅпїЅпїЅпїЅ']"));
+			click(By.cssSelector("input[value='Вход']"));
 		}
 	}
 

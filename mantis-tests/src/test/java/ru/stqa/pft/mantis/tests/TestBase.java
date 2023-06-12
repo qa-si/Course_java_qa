@@ -35,7 +35,6 @@ public class TestBase {
 		return !app.soap().getIssue(issueId).getStatus().getName().equals("resolved");
 	}
 
-	@BeforeTest(groups = "SoapTest")
 	public void skipIfNotFixed(int issueId) throws RemoteException, MalformedURLException, ServiceException {
 		if (isIssueOpen(issueId)) {
 			throw new SkipException("Ignored because of issue " + issueId);
