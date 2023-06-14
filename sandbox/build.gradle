@@ -7,5 +7,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.testng:testng:7.3.0'
+    implementation 'org.testng:testng:6.9.4'
+}
+
+test {
+    useTestNG()
 }
