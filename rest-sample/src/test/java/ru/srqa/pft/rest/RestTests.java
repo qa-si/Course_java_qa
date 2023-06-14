@@ -66,8 +66,8 @@ public class RestTests {
 		JsonElement parsed = new JsonParser().parse(json);
 		JsonArray issue = parsed.getAsJsonObject().get("issues").getAsJsonArray();
 		String state = issue.get(0).getAsJsonObject().get("state_name").getAsString();
-		boolean isClosed = state.equals("Closed");
-		return !isClosed;
+		boolean isResolved = state.equals("Closed") || state.equals("Resolved");
+		return !isResolved;
 	}
 
 }
