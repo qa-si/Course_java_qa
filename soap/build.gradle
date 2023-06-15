@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.testng:testng:8.0.2'
+    implementation 'org.testng:testng:7.3.0'
 }
 
 //buildscript{
