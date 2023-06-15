@@ -5,7 +5,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.testng:testng:6.9.4'
+    implementation 'org.testng:testng:8.0.2'
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.8.3'
     testImplementation group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
     implementation group: 'com.beust', name: 'jcommander', version: '1.82'
