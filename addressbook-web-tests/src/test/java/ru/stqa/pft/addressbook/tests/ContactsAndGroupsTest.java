@@ -20,68 +20,36 @@ public class ContactsAndGroupsTest extends TestBase {
 	@BeforeTest
 	public void preparation() {
 		if (app.db().groups().size() == 0) {
+			app.goTo().groupPage();
 			app.group().create(new GroupData().withName(groupName));
 		}
 		if (app.db().contacts().size() == 0) {
+			app.goTo().contactPage();
 			app.contact().create(new ContactData().withFirstname(contactName));
 		}
 		groups = app.db().groups();
 		contacts = app.db().contacts();
+		app.goTo().contactPage();
 		contacts = app.contact().setGroupsToContacts(contacts, groups);
 	}
 
 	@Test()
 	public void testContactAddToGroup() {
-		for (int i = 0; i < contacts.size(); i++) {
-			ContactData contact = contacts.iterator().next();
-			if (contact.getGroups().size() != groups.size()) {
-				break;
-			} else if (i == contacts.size() - 1) {
-				app.contact().create(new ContactData().withFirstname(contactName));
-			}
-		}
+		app.contact().checkContactsInGroupAndCreateNewContactIfAllContactsInAllGroups(contacts, groups, contactName);
 		ContactData contact = contacts.iterator().next();
-		GroupData addGroup = new GroupData();
 		app.goTo().groupPage();
 		app.goTo().contactPage();
-		for (GroupData group : groups) {
-			if (!contact.getGroups().contains(group)) {
-				app.contact().selectContactById(contact.getId());
-				app.contact().addContactToGroup(group);
-				contact.inGroup(group);
-				addGroup = group;
-				break;
-			}
-		}
-		app.goTo().contactPage();
+		GroupData addGroup = app.contact().addContactToGroupIfItIsNotThere(contact, groups);
+		app.goTo().pageByUrl(app.returnContactPageUrl());
 		app.contact().openContactListInGroup(addGroup);
 		assertThat(true, equalTo(app.contact().checkContactIsVisible(contact)));
 	}
 
 	@Test()
 	public void testContactRemoveFromGroup() {
-		GroupData groupForRemoveContact;
-		for (int i = 0; i < contacts.size(); i++) {
-			ContactData contact = contacts.iterator().next();
-			if (contact.getGroups().size() != 0) {
-				break;
-			} else if (i == contacts.size() - 1) {
-				groupForRemoveContact = groups.iterator().next();
-				app.goTo().contactPage();
-				app.contact().selectContactById(contact.getId());
-				app.contact().addContactToGroup(groupForRemoveContact);
-			}
-		}
-		for (int i = 0; i < groups.size(); i++) {
-			groupForRemoveContact = groups.iterator().next();
-			app.contact().openContactListInGroup(groupForRemoveContact);
-			if (app.contact().all().size() > 0) {
-				ContactData contact = app.contact().all().iterator().next();
-				app.contact().removeContactFromGroup(contact, groupForRemoveContact);
-				app.contact().returnToGroupClick(groupForRemoveContact);
-				assertThat(false, equalTo(app.contact().checkContactIsVisible(contact)));
-				break;
-			}
-		}
+		app.contact().checkContactsInGroupsAndAddContactToGroupUfAllContactsWithoutGroups(contacts, groups);
+		app.contact().checkContactInGroupAndRemoveIfIsThere(groups);
 	}
+
+
 }

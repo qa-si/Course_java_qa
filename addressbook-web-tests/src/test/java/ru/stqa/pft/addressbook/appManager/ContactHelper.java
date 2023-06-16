@@ -15,6 +15,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 public class ContactHelper extends HelperBase {
 
 	public ContactHelper(WebDriver wd) {
@@ -173,8 +176,7 @@ public class ContactHelper extends HelperBase {
 	}
 
 	public void openContactListInGroup(GroupData group) {
-		new Select(wd.findElement(By.name("group")))
-				.selectByVisibleText(group.getName());
+		new Select(wd.findElement(By.name("group"))).selectByValue(group.getId().toString());
 	}
 
 	public void selectContact(ContactData contact) {
@@ -192,8 +194,8 @@ public class ContactHelper extends HelperBase {
 
 	public Contacts setGroupsToContacts(Contacts contacts, Groups groups) {
 		for (GroupData group : groups) {
+			openContactListInGroup(group);
 			for (ContactData contact : contacts) {
-				openContactListInGroup(group);
 				if (checkContactIsVisible(contact)) {
 					contact.inGroup(group);
 				}
@@ -209,6 +211,65 @@ public class ContactHelper extends HelperBase {
 	}
 
 	public void returnToGroupClick(GroupData group) {
-		wd.findElement(By.xpath(String.format("group page \"%s\"", group.getName()))).click();
+//		wd.findElement(By.xpath(String.format("group page \"%s\"", group.getName()))).click();
+		click(By.xpath("//*[text()='return to ']"));
+	}
+
+	public void checkContactsInGroupAndCreateNewContactIfAllContactsInAllGroups(Contacts contacts, Groups groups, String contactName) {
+		for (int i = 0; i < contacts.size(); i++) {
+			ContactData contact = contacts.iterator().next();
+			if (contact.getGroups().size() != groups.size()) {
+				break;
+			} else if (i == contacts.size() - 1) {
+				create(new ContactData().withFirstname(contactName));
+			}
+		}
+	}
+
+
+	public GroupData addContactToGroupIfItIsNotThere(ContactData contact, Groups groups) {
+		GroupData addGroup = new GroupData();
+		for (GroupData group : groups) {
+			if (!contact.getGroups().contains(group)) {
+				selectContactById(contact.getId());
+				addContactToGroup(group);
+				contact.inGroup(group);
+				addGroup = group;
+				break;
+			}
+		}
+		return addGroup;
+	}
+
+	public void checkContactInGroupAndRemoveIfIsThere(Groups groups) {
+		GroupData groupForRemoveContact;
+		for (int i = 0; i < groups.size(); i++) {
+			groupForRemoveContact = groups.iterator().next();
+			openContactListInGroup(groupForRemoveContact);
+			if (all().size() > 0) {
+				ContactData contact = all().iterator().next();
+				removeContactFromGroup(contact, groupForRemoveContact);
+
+				returnToGroupClick(groupForRemoveContact);
+				assertThat(false, equalTo(checkContactIsVisible(contact)));
+				break;
+			}
+		}
+	}
+
+	public void checkContactsInGroupsAndAddContactToGroupUfAllContactsWithoutGroups(Contacts contacts, Groups groups) {
+		NavigationHelper goTo = new NavigationHelper(wd);
+		GroupData groupForRemoveContact;
+		for (int i = 0; i < contacts.size(); i++) {
+			ContactData contact = contacts.iterator().next();
+			if (contact.getGroups().size() != 0) {
+				break;
+			} else if (i == contacts.size() - 1) {
+				groupForRemoveContact = groups.iterator().next();
+				goTo.contactPage();
+				selectContactById(contact.getId());
+				addContactToGroup(groupForRemoveContact);
+			}
+		}
 	}
 }

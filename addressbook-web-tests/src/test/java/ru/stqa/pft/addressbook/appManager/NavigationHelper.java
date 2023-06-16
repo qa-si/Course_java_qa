@@ -25,4 +25,10 @@ public class NavigationHelper extends HelperBase {
 		}
 		click(By.xpath("//*[text()='home']"));
 	}
+
+	public void pageByUrl(String url) {
+		if (!wd.getCurrentUrl().equals(url)) {
+			wd.get(url);
+		}
+	}
 }

@@ -94,4 +94,8 @@ public class ApplicationManager {
 	public void acceptAlert() {
 		wd.switchTo().alert().accept();
 	}
+
+	public String returnContactPageUrl(){
+		return properties.getProperty("web.baseUrl");
+	}
 }
