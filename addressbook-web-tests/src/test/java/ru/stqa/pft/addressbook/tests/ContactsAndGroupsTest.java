@@ -12,13 +12,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactsAndGroupsTest extends TestBase {
 
-	private String groupName = "newTestGroup";
-	private String contactName = "newTestContact";
+	ContactData contactForAddingToGroup;
+	GroupData groupForAddingContact;
 	Groups groups;
 	Contacts contacts;
 
 	@BeforeTest
 	public void preparation() {
+		String groupName = "newTestGroup " + System.currentTimeMillis();
+		String contactName = "newTestContact " + System.currentTimeMillis();
 		if (app.db().groups().size() == 0) {
 			app.goTo().groupPage();
 			app.group().create(new GroupData().withName(groupName));
@@ -30,19 +32,17 @@ public class ContactsAndGroupsTest extends TestBase {
 		groups = app.db().groups();
 		contacts = app.db().contacts();
 		app.goTo().contactPage();
-		contacts = app.contact().setGroupsToContacts(contacts, groups);
+		contactForAddingToGroup = app.contact().setContactForAddingToGroup(contacts, groups);
+		groupForAddingContact = app.contact().setGroupForAddingContact(contactForAddingToGroup, groups);
+		app.goTo().pageByUrl(app.returnContactPageUrl());
 	}
 
 	@Test()
 	public void testContactAddToGroup() {
-		app.contact().checkContactsInGroupAndCreateNewContactIfAllContactsInAllGroups(contacts, groups, contactName);
-		ContactData contact = contacts.iterator().next();
-		app.goTo().groupPage();
-		app.goTo().contactPage();
-		GroupData addGroup = app.contact().addContactToGroupIfItIsNotThere(contact, groups);
+		app.contact().addContactToGroupIfItIsNotThere(contactForAddingToGroup, groupForAddingContact);
 		app.goTo().pageByUrl(app.returnContactPageUrl());
-		app.contact().openContactListInGroup(addGroup);
-		assertThat(true, equalTo(app.contact().checkContactIsVisible(contact)));
+		app.contact().openContactListInGroup(groupForAddingContact);
+		assertThat(true, equalTo(app.contact().checkContactIsVisible(contactForAddingToGroup)));
 	}
 
 	@Test()

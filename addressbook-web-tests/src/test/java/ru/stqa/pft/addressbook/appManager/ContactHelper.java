@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.appManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ByIdOrName;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -204,6 +205,48 @@ public class ContactHelper extends HelperBase {
 		return contacts;
 	}
 
+	public ContactData setContactForAddingToGroup(Contacts contacts, Groups groups) {
+		ContactData contactForAddingToGroup = null;
+		for (GroupData group : groups) {
+			openContactListInGroup(group);
+			if (!all().equals(contacts)) {
+				for (ContactData contact : contacts) {
+					if (!checkContactIsVisible(contact)) {
+						contactForAddingToGroup = contact;
+						break;
+					}
+				}
+			}
+			if (contactForAddingToGroup != null) {
+				break;
+			}
+		}
+		if (contactForAddingToGroup == null) {
+			contactForAddingToGroup = new ContactData()
+					.withFirstname("new name " + System.currentTimeMillis());
+			create(contactForAddingToGroup);
+			click(By.xpath("//*[text()='home']"));
+			contactForAddingToGroup.withId(getIdContactByName(contactForAddingToGroup));
+		}
+		return contactForAddingToGroup;
+	}
+
+	public int getIdContactByName(ContactData contact) {
+		return Integer.parseInt(wd.findElement(By.xpath(String.format("//td[text()=%s]..//td[1]/input", contact.getFirstname()))).getAttribute("value"));
+	}
+
+	public GroupData setGroupForAddingContact(ContactData contact, Groups groups) {
+		GroupData groupForAdding = null;
+		for (GroupData group : groups) {
+			openContactListInGroup(group);
+			if (!checkContactIsVisible(contact)) {
+				groupForAdding = group;
+				break;
+			}
+		}
+		return groupForAdding;
+	}
+
 	public void removeContactFromGroup(ContactData contact, GroupData group) {
 		openContactListInGroup(group);
 		selectContactById(contact.getId());
@@ -211,14 +254,13 @@ public class ContactHelper extends HelperBase {
 	}
 
 	public void returnToGroupClick(GroupData group) {
-//		wd.findElement(By.xpath(String.format("group page \"%s\"", group.getName()))).click();
-		click(By.xpath("//*[text()='return to ']"));
+		click(By.xpath(String.format("//*[text()='group page \"%s\"']", group.getName())));
 	}
 
 	public void checkContactsInGroupAndCreateNewContactIfAllContactsInAllGroups(Contacts contacts, Groups groups, String contactName) {
 		for (int i = 0; i < contacts.size(); i++) {
 			ContactData contact = contacts.iterator().next();
-			if (contact.getGroups().size() != groups.size()) {
+			if (contact.getGroups().size() < groups.size()) {
 				break;
 			} else if (i == contacts.size() - 1) {
 				create(new ContactData().withFirstname(contactName));
@@ -239,6 +281,11 @@ public class ContactHelper extends HelperBase {
 			}
 		}
 		return addGroup;
+	}
+
+	public void addContactToGroupIfItIsNotThere(ContactData contact, GroupData group) {
+		selectContactById(contact.getId());
+		addContactToGroup(group);
 	}
 
 	public void checkContactInGroupAndRemoveIfIsThere(Groups groups) {
